@@ -18,15 +18,15 @@ html, body, #map {
 }
 
 .stations svg {
-  width: 60px;
-  height: 20px;
+  width: 100px;
+  height: 100px;
   padding-right: 100px;
   font: 10px sans-serif;
 }
 
 .stations circle {
-  fill: brown;
-  stroke: black;
+  fill: rgba(115, 33, 114, 0.5);
+  stroke: rgb(115, 0, 111);
   stroke-width: 1.5px;
 }
 
@@ -38,9 +38,9 @@ html, body, #map {
 
 // Create the Google Map…
 var map = new google.maps.Map(d3.select("#map").node(), {
-  zoom: 8,
-  center: new google.maps.LatLng(37.76487, -122.41948),
-  mapTypeId: google.maps.MapTypeId.TERRAIN
+  zoom: 10,
+  center: new google.maps.LatLng(32.7150, -117.1625),
+  mapTypeId: google.maps.MapTypeId.ROADMAP
 });
 
 // Load the station data. When the data comes back, create an overlay.
@@ -56,7 +56,7 @@ d3.json("stations.json", function(data) {
     // We could use a single SVG, but what size would it have?
     overlay.draw = function() {
       var projection = this.getProjection(),
-          padding = 10;
+          padding = 20;
 
       var marker = layer.selectAll("svg")
           .data(d3.entries(data))
@@ -67,7 +67,7 @@ d3.json("stations.json", function(data) {
 
       // Add a circle.
       marker.append("svg:circle")
-          .attr("r", 4.5)
+          .attr("r", 10)
           .attr("cx", padding)
           .attr("cy", padding);
 
@@ -79,7 +79,7 @@ d3.json("stations.json", function(data) {
           .text(function(d) { return d.key; });
 
       function transform(d) {
-        d = new google.maps.LatLng(d.value[1], d.value[0]);
+        d = new google.maps.LatLng(d.value[0], d.value[1]);
         d = projection.fromLatLngToDivPixel(d);
         return d3.select(this)
             .style("left", (d.x - padding) + "px")
