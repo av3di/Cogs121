@@ -4,7 +4,6 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
     <title>{{title}}</title>
 
-    <!--<link rel='stylesheet' href='/stylesheets/reset.css' />-->
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/jquery-ui.min.css' />
     <link rel='stylesheet' href='/stylesheets/jquery-ui.theme.min.css' />
@@ -12,7 +11,9 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.min.css' /> 
 
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="/javascripts/jquery-ui.min.js"></script>
 
     <!-- 
@@ -58,7 +59,62 @@
           </div>
           <div class="row">
             <div class="col-md-8"></div>
-            <div id="the-time" class="col-md-4">Time: 00:00</div>
+            <div id="the-time" class="col-md-4">
+              Time: 00:00
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#">All</a></li>
+                <li role="presentation"><a href="#">CO</a></li>
+                <li role="presentation"><a href="#">NO2</a></li>
+                <li role="presentation"><a href="#">Ozone</a></li>
+                <li role="presentation"><a href="#">AQI</a></li>                
+              </ul>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Reading</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">Latitude <small>(degrees)</small></th>
+                    <td>23.32345</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Longitude <small>(degrees)</small></th>
+                    <td>23.32345</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Carbon monoxide <small>(ppm)</small></th>
+                    <td>23.32345</td>
+                  </tr>
+                  <tr class="warning">
+                    <th scope="row">Nitrous Oxide <small>(ppb)</small></th>
+                    <td>23.32345</td>
+                  </tr>
+
+                  <tr class="danger">
+                    <th scope="row">Ozone <small>(unknown)</small></th>
+                    <td>23.32345</td>
+                  </tr>
+
+                  <tr class="success">
+                    <th scope="row">Air Quality Index</th>
+                    <td>23.32345</td>
+                  </tr>
+
+
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
