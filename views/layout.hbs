@@ -3,10 +3,18 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
     <title>{{title}}</title>
+
     <!--<link rel='stylesheet' href='/stylesheets/reset.css' />-->
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/jquery-ui.min.css' />
+    <link rel='stylesheet' href='/stylesheets/jquery-ui.theme.min.css' />
+    <link rel='stylesheet' href='/stylesheets/jquery-ui.structure.min.css' />
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.min.css' /> 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/javascripts/jquery-ui.min.js"></script>
+
     <!-- 
         You need to include this script tag on any page that has a Google Map.
 
@@ -21,7 +29,6 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi-kNKUXv3eofIsk2DqRcf0yVU86DmOfw&sensor=false"></script>
     <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>
     <script src="javascripts/googlemaps.js"></script>
-
   </head>
 
     <body>
@@ -38,23 +45,29 @@
       </header>
 
     <div class="container">
-    
+
       <div class="row">
         <div class="col-md-8">
         <!-- The element that will 
         contain our Google Map. This is used in both the Javascript and CSS above. -->
           <div id="map"></div>
         </div>
-        <div class="col-md-4"></div>
+        <div class="col-md-4">
+          <div class="row">
+            <div class="col-md-12"><div id="slider"></div></div>
+          </div>
+          <div class="row">
+            <div class="col-md-8"></div>
+            <div id="the-time" class="col-md-4">Time: 00:00</div>
+          </div>
+        </div>
       </div>
 
     </div>
+
+    <script src="/javascripts/visualization.js"></script>
     <!--
       <script src='/bootstrap/dist/js/bootstrap.min.js'></script>
     -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-
-    <script src="/javascripts/visualization.js"></script>
-
     </body>
 </html>

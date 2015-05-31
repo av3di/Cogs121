@@ -72,6 +72,20 @@ p#mission_statement
   text-align: right;
   color: #424242;
 }
+
+#slider{
+  margin-bottom: 5px;
+}
+
+#the-time{
+  text-align:right;
+  color: #58585a;
+}
+
+#slider-ctrl{
+  color:#dfeffc
+}
+
 #map {
   width: 100%;
 	clear: both;
