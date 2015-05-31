@@ -1,6 +1,6 @@
 div.vertical-line{
   width: 1px; /* Line width */
-  background-color: black; /* Line color */
+  background-color: #eee; /* Line color */
   height: 30%;
   display:inline-block; /* Override in-line if you want specific height. */
 /* Causes the line to float to left of content. 
@@ -31,10 +31,9 @@ header
 {
 }
 
-header div#title img
+header div#title i
 {
-  width: 34px;
-  height: 34px;
+  color:#00BFFF;
   margin-top: -26.5px;
   margin-right: 3px;
 }
@@ -43,7 +42,7 @@ header div#title h1
 {
   margin-left: 6px;
   display: inline;
-  font-size: 47px;
+  font-size: 45px;
   color: #00BFFF;
   font-family: "Neon", sans-serif;
 }
