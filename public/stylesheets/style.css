@@ -9,26 +9,15 @@ div.vertical-line{
 }
 
 
+
 @font-face {
   font-family: "Neon";
   src: url(neon.ttf) format("truetype");
 }
 
 body {
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
-
-html, body {
-  width: 100%;
-  height: 100%;
-}
-
-header
-{
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #f5feff;
 }
 
 header div#title i
@@ -50,7 +39,7 @@ header div#title h1
 header div#title big
 {
   display: block;
-  font-size: 22px;
+  font-size: 19.5px;
   color: #58585a;
 }
 
@@ -60,17 +49,6 @@ header div#tagline
   text-align: left;
   font-size: 18px;
   color: #58585a;
-}
-
-div.data_columns
-{
-  float: left;
-  width: 72%;
-}
-p#mission_statement
-{
-  text-align: right;
-  color: #424242;
 }
 
 #slider{
@@ -88,8 +66,10 @@ p#mission_statement
 
 #map {
   width: 100%;
+  height:550px;
 	clear: both;
-  border:1px solid black;
+  border:1px solid #bababa;
+
 }
 
 div#right_column
@@ -126,7 +106,23 @@ div#piechart
   stroke-width: 1.5px;
 }
 
-/* Set a size for our map container, the Google Map will take up 100% of this container */
-#map {
-  height: 500px;
+#data-tabs{
+  border-bottom: 0px;
+}
+
+#tab-div{
+  background-color: white;
+  padding-top:15px;
+  border:1px solid #bababa;
+  border-bottom:0px;
+}
+
+#table-div{
+  background-color: white;
+  border:1px solid #bababa;
+  border-top:0px;
+}
+
+#time-div{
+  margin-bottom: 5px;
 }

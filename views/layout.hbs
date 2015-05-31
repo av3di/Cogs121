@@ -4,7 +4,6 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
     <title>{{title}}</title>
 
-    <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel='stylesheet' href='/stylesheets/jquery-ui.min.css' />
     <link rel='stylesheet' href='/stylesheets/jquery-ui.theme.min.css' />
     <link rel='stylesheet' href='/stylesheets/jquery-ui.structure.min.css' />
@@ -30,6 +29,8 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi-kNKUXv3eofIsk2DqRcf0yVU86DmOfw&sensor=false"></script>
     <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>
     <script src="javascripts/googlemaps.js"></script>
+
+    <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
 
     <body>
@@ -47,7 +48,7 @@
 
     <div class="container">
 
-      <div class="row">
+      <div id="main-row" class="row">
         <div class="col-md-8">
         <!-- The element that will 
         contain our Google Map. This is used in both the Javascript and CSS above. -->
@@ -57,16 +58,16 @@
           <div class="row">
             <div class="col-md-12"><div id="slider"></div></div>
           </div>
-          <div class="row">
+          <div id="time-div" class="row">
             <div class="col-md-8"></div>
             <div id="the-time" class="col-md-4">
               Time: 00:00
             </div>
           </div>
-          <div class="row">
+          <div id="tab-div" class="row">
             <div class="col-md-12">
-              <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#">All</a></li>
+              <ul id="data-tabs" class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#">All Data</a></li>
                 <li role="presentation"><a href="#">CO</a></li>
                 <li role="presentation"><a href="#">NO2</a></li>
                 <li role="presentation"><a href="#">Ozone</a></li>
@@ -74,7 +75,7 @@
               </ul>
             </div>
           </div>
-          <div class="row">
+          <div id="table-div" class="row">
             <div class="col-md-12">
               <table class="table table-bordered">
                 <thead>
@@ -85,7 +86,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <th scope="row">Latitude <small>(degrees)</small></th>
+                    <th scope="row">Latitude</a><small> (degrees)</small></th>
                     <td>23.32345</td>
                   </tr>
                   <tr>
@@ -93,21 +94,21 @@
                     <td>23.32345</td>
                   </tr>
                   <tr>
-                    <th scope="row">Carbon monoxide <small>(ppm)</small></th>
+                    <th scope="row"><a href="#">Carbon monoxide</a> <small>(ppm)</small></th>
                     <td>23.32345</td>
                   </tr>
                   <tr class="warning">
-                    <th scope="row">Nitrous Oxide <small>(ppb)</small></th>
+                    <th scope="row"><a href="#">Nitrous Oxide</a> <small>(ppb)</small></th>
                     <td>23.32345</td>
                   </tr>
 
                   <tr class="danger">
-                    <th scope="row">Ozone <small>(unknown)</small></th>
+                    <th scope="row"><a href="#">Ozone</a> <small>(unknown)</small></th>
                     <td>23.32345</td>
                   </tr>
 
                   <tr class="success">
-                    <th scope="row">Air Quality Index</th>
+                    <th scope="row"><a href="#">Air Quality Index</a></th>
                     <td>23.32345</td>
                   </tr>
 
@@ -117,6 +118,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12"><hr></div>
       </div>
 
     </div>
