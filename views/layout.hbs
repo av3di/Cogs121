@@ -1,18 +1,239 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  	<meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
-    <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.min.css' />
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>
-  </head>
-  <body>
-  	<div class="container">
-	    {{{body}}}
-	  </div>
-	    <script src='/jquery/dist/jquery.min.js'></script>
-	    <script src='/bootstrap/dist/js/bootstrap.min.js'></script>
-  </body>
+    <head>
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no"/>
+        <title>{{title}}</title>
+        <link rel='stylesheet' href='/stylesheets/reset.css' />
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+       <!-- <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.min.css' /> -->
+       
+        <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>
+        
+        <style type="text/css">
+            /* Set a size for our map container, the Google Map will take up 100% of this container */
+            #map {
+                
+                height: 500px;
+            }
+        </style>
+        
+        <!-- 
+            You need to include this script tag on any page that has a Google Map.
+
+            The following script tag will work when opening this example locally on your computer.
+            But if you use this on a localhost server or a live website you will need to include an API key. 
+            Sign up for one here (it's free for small usage): 
+                https://developers.google.com/maps/documentation/javascript/tutorial#api_key
+
+            After you sign up, use the following script tag with YOUR_GOOGLE_API_KEY replaced with your actual key.
+                <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_API_KEY&sensor=false"></script>
+        -->
+        <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDi-kNKUXv3eofIsk2DqRcf0yVU86DmOfw&sensor=false"></script>
+        <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?1.29.1"></script>
+        <script type="text/javascript">
+            // When the window has finished loading create our google map below
+            google.maps.event.addDomListener(window, 'load', init);
+        
+            function init() {
+                // Basic options for a simple Google Map
+                // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
+                var mapOptions = {
+                    // How zoomed in you want the map to start at (always required)
+                    zoom: 9,
+
+                    // The latitude and longitude to center the map (always required)
+                    center: new google.maps.LatLng(32.7150, -117.1625), // San Diego
+
+
+                    // How you would like to style the map. 
+                    // This is where you would paste any style found on Snazzy Maps.
+                    styles: [{"featureType":"all","elementType":"labels.text.fill","stylers":[{"saturation":36},{"color":"#000000"},{"lightness":40}]},{"featureType":"all","elementType":"labels.text.stroke","stylers":[{"visibility":"on"},{"color":"#000000"},{"lightness":16}]},{"featureType":"all","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"administrative","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":17},{"weight":1.2}]},{"featureType":"landscape","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":20}]},{"featureType":"poi","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":21}]},{"featureType":"road.highway","elementType":"geometry.fill","stylers":[{"color":"#000000"},{"lightness":17}]},{"featureType":"road.highway","elementType":"geometry.stroke","stylers":[{"color":"#000000"},{"lightness":29},{"weight":0.2}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":18}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":16}]},{"featureType":"transit","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":19}]},{"featureType":"water","elementType":"geometry","stylers":[{"color":"#000000"},{"lightness":17}]}]
+                };
+
+                // Get the HTML DOM element that will contain your map 
+                // We are using a div with id="map" seen below in the <body>
+                var mapElement = document.getElementById('map');
+
+                // Create the Google Map using our element and options defined above
+                var map = new google.maps.Map(mapElement, mapOptions);
+
+                // Customize the marker
+                
+
+                // Load the station data. When the data comes back, create an overlay.
+                d3.json("stations.json", function(data) {
+                  var overlay = new google.maps.OverlayView();
+
+                  // Add the container when the overlay is added to the map.
+                  overlay.onAdd = function() {
+                    var layer = d3.select(this.getPanes().overlayLayer).append("div")
+                        .attr("class", "stations");
+
+                    // Draw each marker as a separate SVG element.
+                    // We could use a single SVG, but what size would it have?
+                    overlay.draw = function() {
+                      var projection = this.getProjection(),
+                          padding = 20;
+
+                      var marker = layer.selectAll("svg")
+                          .data(d3.entries(data))
+                          .each(transform) // update existing markers
+                        .enter().append("svg:svg")
+                          .each(transform)
+                          .attr("class", "marker");
+
+                      // Add a circle.
+                      marker.append("svg:circle")
+                          .attr("r", 10)
+                          .attr("cx", padding)
+                          .attr("cy", padding);
+
+                      // Add a label.
+                      marker.append("svg:text")
+                          .attr("x", padding + 7)
+                          .attr("y", padding)
+                          .attr("dy", ".31em")
+                          .text(function(d) { return d.key; });
+
+                      function transform(d) {
+                        var image = '/images/marker.png';
+                        
+                        d = new google.maps.LatLng(d.value[0], d.value[1]);
+                        var blue_marker = new google.maps.Marker({
+                            position: d,
+                            map: map,
+                            icon: image
+                        });
+                        d = projection.fromLatLngToDivPixel(d);
+                        return d3.select(this)
+                            .style("left", (d.x - padding) + "px")
+                            .style("top", (d.y - padding) + "px");
+                      }
+                    };
+                  };
+
+                  // Bind our overlay to the map…
+                  overlay.setMap(map);
+                });
+        var dataset = [
+          { label: 'CO', count: 10 }, 
+          { label: 'NO2', count: 20 },
+          { label: 'O2', count: 30 },
+          { label: 'AQI', count: 40 }
+        ];
+
+
+        var width = 360;
+        var height = 360;
+        var radius = Math.min(width, height) / 2;
+
+        var color = d3.scale.ordinal()
+                    .range(['#003d55', '#323232', '#0088bb', '#58585a']); 
+
+        var svg = d3.select('#piechart')
+          .append('svg')
+          .attr('width', width)
+          .attr('height', height)
+          .append('g')
+          .attr('transform', 'translate(' + (width / 2) + 
+            ',' + (height / 2) + ')');
+
+        var arc = d3.svg.arc()
+          .outerRadius(radius);
+
+        var pie = d3.layout.pie()
+          .value(function(d) { return d.count; })
+          .sort(null);
+
+        var path = svg.selectAll('path')
+          .data(pie(dataset))
+          .enter()
+          .append('path')
+          .attr('d', arc)
+          .attr('fill', function(d, i) { 
+            return color(d.data.label);
+          });
+
+          var arcs = svg.selectAll("g.slice")     //this selects all <g> elements with class slice (there aren't any yet)
+        .data(pie(dataset))                          //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties) 
+        .enter()                            //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
+            .append("svg:g")                //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
+                .attr("class", "slice");    //allow us to style things in the slices (like text)
+
+        arcs.append("svg:path")
+                .attr("fill", function(d, i) { return color(i); } ) //set the color for each slice to be chosen from the color function defined above
+                .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
+
+        arcs.append("svg:text")                                     //add a label to each slice
+                .attr("transform", function(d) {                    //set the label's origin to the center of the arc
+                //we have to make sure to set these before calling arc.centroid
+                d.innerRadius = 0;
+                d.outerRadius = radius;
+                return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
+            })
+            .attr("text-anchor", "middle")                          //center the text on it's origin
+            .text(function(d, i) { return dataset[i].label; });        //get the label from our original data array
+
+
+            }
+        </script>
+
+    </head>
+    <body>
+
+      <header>
+        <div class="container">
+          <div id="logo"><img src="images/logo.png"><h1>{{title}}</h1></div>
+          <div id="tagline">Air Pollution Data Visualization</div>
+          <div class="clear_floats"></div>
+        </div>
+      </header>
+
+    <!-- 
+      <div id="title-container">
+      <h1>{{title}}</h1>
+      <p>cogs 121 visualization</p>
+      </div>
+    -->
+    <!--
+      <div id="button-container">
+      <button class="btn btn-default">Button 1</button>
+      <button class="btn btn-default">Button 2</button>
+      <button class="btn btn-default">Button 3</button>
+      </div>
+      <div id="map"></div>
+      <div id="slider">
+        <img style="width:100%" src="/images/horizontal-basic.png" />
+      </div>
+    -->
+
+    <div id="data_container" class="container">
+    
+      <div class="data_columns">
+        <!-- The element that will contain our Google Map. This is used in both the Javascript and CSS above. -->
+        <div id="map"></div>
+      </div>
+          
+      <div id="right_column" class="data_columns">
+        <div>
+          <p id="mission_statement">
+            Enter what our data visualization is about here. What kind of data are we showing the user? Why are we showing
+            this data. Who is our audience. More about our data here. Bulbasaur Lorem ipsum dolor sit amet, consectetur adipiscing.
+            Chikorita Bayleef Meganium Cyndaquil Quilava Typhlosion Totodile. Treecko Grovyle Sceptile Torchic Combusken Blaziken Mudkip Marshtomp.
+          </p>
+        </div>
+        <div id="piechart">
+
+        </div>
+      </div>
+      <div class="clear_floats"></div>
+    </div>
+    <!--
+      <script src='/bootstrap/dist/js/bootstrap.min.js'></script>
+    -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+    <script src="/javascripts/visualization.js"></script>
+
+    </body>
 </html>

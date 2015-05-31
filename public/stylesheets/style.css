@@ -1,5 +1,9 @@
+@font-face {
+  font-family: "Neon";
+  src: url(neon.ttf) format("truetype");
+}
+
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,26 +11,90 @@ a {
   color: #00B7FF;
 }
 
-body {
-	overflow-y: hidden;
-}
-
-html, body, body div.container {
+html, body {
   width: 100%;
   height: 100%;
-  /*margin: 0;
-  padding: 0;*/
 }
 
-body div.container {
-	padding: 15px;
+.container
+{
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.clear_floats
+{
+  clear: both;
+}
+header
+{
+  background-color: #323232;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
+header div#logo 
+{
+  width: 50%;
+  float: left;
+}
+
+header div#logo img
+{
+  width: 33px;
+  height: 38px;
+}
+
+header div#logo h1
+{
+  display: inline;
+  font-size: 48px;
+  color: #58585a;
+  font-family: "Neon", sans-serif;
+  margin-left: 12px;
+}
+
+header div#tagline
+{
+  width: 50%;
+  float: right;
+  text-align: right;
+  font-size: 18px;
+  padding-top: 30px;
+  color: #0088bb;
+}
+
+div#data_container
+{
+  margin-top: 45px;
+  margin-bottom: 45px;
+}
+
+div.data_columns
+{
+  float: left;
+  width: 50%;
+}
+p#mission_statement
+{
+  text-align: right;
+  color: #424242;
+}
 #map {
-	height: 75%;
+  width: 100%;
 	clear: both;
 }
 
+div#right_column
+{
+  width: 45%;
+  margin-left: 5%;
+}
+div#piechart
+{
+  margin-top: 30px;
+}
 #title-container {
 	float: left;
 }
@@ -51,7 +119,7 @@ h1 {
 }
 
 .stations circle {
-  fill: rgba(115, 33, 114, 0.5);
-  stroke: rgb(115, 0, 111);
+  fill: rgba(115, 33, 114, 0.0);
+  stroke: rgba(115, 0, 111, 0.0);
   stroke-width: 1.5px;
 }
