@@ -112,7 +112,7 @@ google.maps.event.addDomListener(window, 'load', init);
         
 
         // Load the station data. When the data comes back, create an overlay.
-        d3.json("stations.json", function(data) {
+        d3.json("coords16.json", function(data) {
           var overlay = new google.maps.OverlayView();
 
           // Add the container when the overlay is added to the map.
@@ -138,13 +138,6 @@ google.maps.event.addDomListener(window, 'load', init);
                   .attr("r", 10)
                   .attr("cx", padding)
                   .attr("cy", padding);
-
-              // Add a label.
-              marker.append("svg:text")
-                  .attr("x", padding + 7)
-                  .attr("y", padding)
-                  .attr("dy", ".31em")
-                  .text(function(d) { return d.key; });
 
               function transform(d) {
                 var image = '/images/marker.png';
