@@ -6,10 +6,10 @@ google.maps.event.addDomListener(window, 'load', init);
         // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
         var mapOptions = {
             // How zoomed in you want the map to start at (always required)
-            zoom: 9,
+            zoom: 10,
 
             // The latitude and longitude to center the map (always required)
-            center: new google.maps.LatLng(32.7150, -117.1625), // San Diego
+            center: new google.maps.LatLng(32.7650, -117.1625), // San Diego
 
 
             // How you would like to style the map. 
@@ -106,13 +106,113 @@ google.maps.event.addDomListener(window, 'load', init);
         var mapElement = document.getElementById('map');
 
         // Create the Google Map using our element and options defined above
-        var map = new google.maps.Map(mapElement, mapOptions);
+        window.map = new google.maps.Map(mapElement, mapOptions);
 
-        // Customize the marker
-        
+
+      $.getJSON( "hour0.json", function( data ) {
+          for(var i in window.coords){
+            window.coords[i].setMap(null);
+          }
+
+          data_type = $('.active').attr('id');
+          window.coords = [];
+          window.coord_listeners =[];
+          var coordAdd;
+          var coord_color;
+          $.each( data, function( key, val ) {
+            reading = val[data_type];
+            if(reading==7035.0){}
+            else
+            {
+              if(data_type=="CO AQI"){
+                if (reading<=50){coord_color="#00FF00"}
+                else if (reading<=100){coord_color="#FFFF00"}
+                else {coord_color="#FF0000"}
+              }
+              else if(data_type=="CO"){
+                if (reading<=9) {coord_color="#00FF00"}
+                else if (reading<=35) {coord_color="#FFFF00"}
+                else {coord_color="#FF0000"}
+              }
+              else if(data_type=="NO2"){
+                if (reading<=50) {coord_color="#00FF00"}
+                else if (reading<=100) {coord_color="#FFFF00"}
+                else {coord_color="#FF0000"}
+              }
+              else if(data_type=="O3"){
+                if (reading<0.075) {coord_color="#00FF00"}
+                else {coord_color="FF0000"}
+              }
+
+              var circleOptions = {
+                strokeColor: coord_color,
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: coord_color,
+                fillOpacity: 0.35,
+                map: window.map,
+                center: new google.maps.LatLng(val.lat,val.lon),
+                co: val['CO'],
+                no2: val['NO2'],
+                o3: val['O3'],
+                aqi: val['CO AQI'],
+                radius: 100
+              };
+              window.coords.push(new google.maps.Circle(circleOptions));
+              var idx = window.coords.length-1;
+              console.log(idx);
+              window.coord_listeners.push(google.maps.event.addListener(window.coords[idx], 'mouseover', function(data) {
+                console.log(idx);
+                co_to_insert = window.coords[idx].co;
+                no2_to_insert = window.coords[idx].no2;
+                o3_to_insert = window.coords[idx].o3;
+                aqi_to_insert = window.coords[idx].aqi;
+
+                print_arr = [co_to_insert,no2_to_insert,o3_to_insert,aqi_to_insert];
+
+                console.log(print_arr);
+
+                if (co_to_insert==7035.0){co_to_insert='--'}
+                if (no2_to_insert==7035.0){no2_to_insert='--'}
+                if (o3_to_insert==7035.0){o3_to_insert='--'}
+                if (aqi_to_insert==7035.0){aqi_to_insert='--'}
+
+                $('#table_AQI').attr('class' ,'')
+                $('#table_CO').attr('class' ,'')
+                $('#table_NO2').attr('class' ,'')
+                $('#table_O3').attr('class' ,'')
+
+                if(aqi_to_insert!='--'){
+                  if (aqi_to_insert<=50){$('#table_AQI').attr('class' ,'success')}
+                  else if (aqi_to_insert<=100){$('#table_AQI').attr('class' ,'warning')}
+                  else {$('#table_AQI').attr('class' ,'danger')}
+                }
+                if(co_to_insert!='--'){
+                  if (co_to_insert<=9) {$('#table_CO').attr('class' ,'success')}
+                  else if (co_to_insert<=35) {$('#table_CO').attr('class' ,'warning')}
+                  else {$('#table_CO').attr('class' ,'danger')}
+                }
+                if(no2_to_insert!='--'){
+                  if (no2_to_insert<=50) {$('#table_NO2').attr('class' ,'success')}
+                  else if (no2_to_insert<=100) {$('#table_NO2').attr('class' ,'warning')}
+                  else {$('#table_NO2').attr('class' ,'danger')}
+                }
+                if(o3_to_insert!='--'){
+                  if (o3_to_insert<0.075) {$('#table_O3').attr('class' ,'success')}
+                  else {$('#table_O3').attr('class' ,'danger')}
+                }
+
+                $('#table_AQI').children('td').text(String(aqi_to_insert));
+                $('#table_CO').children('td').text(String(co_to_insert));
+                $('#table_NO2').children('td').text(String(no2_to_insert));
+                $('#table_O3').children('td').text(String(o3_to_insert));
+              }));
+            }       
+          });
+        });
 
         // Load the station data. When the data comes back, create an overlay.
-        d3.json("coords16.json", function(data) {
+     /*   d3.json("coords16.json", function(data) {
           var overlay = new google.maps.OverlayView();
 
           // Add the container when the overlay is added to the map.
@@ -158,65 +258,5 @@ google.maps.event.addDomListener(window, 'load', init);
 
           // Bind our overlay to the map…
           overlay.setMap(map);
-        });
-var dataset = [
-  { label: 'CO', count: 10 }, 
-  { label: 'NO2', count: 20 },
-  { label: 'O2', count: 30 },
-  { label: 'AQI', count: 40 }
-];
-
-
-var width = 360;
-var height = 360;
-var radius = Math.min(width, height) / 2;
-
-var color = d3.scale.ordinal()
-            .range(['#003d55', '#323232', '#0088bb', '#58585a']); 
-
-var svg = d3.select('#piechart')
-  .append('svg')
-  .attr('width', width)
-  .attr('height', height)
-  .append('g')
-  .attr('transform', 'translate(' + (width / 2) + 
-    ',' + (height / 2) + ')');
-
-var arc = d3.svg.arc()
-  .outerRadius(radius);
-
-var pie = d3.layout.pie()
-  .value(function(d) { return d.count; })
-  .sort(null);
-
-var path = svg.selectAll('path')
-  .data(pie(dataset))
-  .enter()
-  .append('path')
-  .attr('d', arc)
-  .attr('fill', function(d, i) { 
-    return color(d.data.label);
-  });
-
-  var arcs = svg.selectAll("g.slice")     //this selects all <g> elements with class slice (there aren't any yet)
-.data(pie(dataset))                          //associate the generated pie data (an array of arcs, each having startAngle, endAngle and value properties) 
-.enter()                            //this will create <g> elements for every "extra" data element that should be associated with a selection. The result is creating a <g> for every object in the data array
-    .append("svg:g")                //create a group to hold each slice (we will have a <path> and a <text> element associated with each slice)
-        .attr("class", "slice");    //allow us to style things in the slices (like text)
-
-arcs.append("svg:path")
-        .attr("fill", function(d, i) { return color(i); } ) //set the color for each slice to be chosen from the color function defined above
-        .attr("d", arc);                                    //this creates the actual SVG path using the associated data (pie) with the arc drawing function
-
-arcs.append("svg:text")                                     //add a label to each slice
-        .attr("transform", function(d) {                    //set the label's origin to the center of the arc
-        //we have to make sure to set these before calling arc.centroid
-        d.innerRadius = 0;
-        d.outerRadius = radius;
-        return "translate(" + arc.centroid(d) + ")";        //this gives us a pair of coordinates like [50, 50]
-    })
-    .attr("text-anchor", "middle")                          //center the text on it's origin
-    .text(function(d, i) { return dataset[i].label; });        //get the label from our original data array
-
-
+        });*/
 }

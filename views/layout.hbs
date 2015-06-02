@@ -7,6 +7,8 @@
     <link rel='stylesheet' href='/stylesheets/jquery-ui.min.css' />
     <link rel='stylesheet' href='/stylesheets/jquery-ui.theme.min.css' />
     <link rel='stylesheet' href='/stylesheets/jquery-ui.structure.min.css' />
+    <link rel='stylesheet' href='/stylesheets/jquery.ui.labeledslider.css' />
+
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <link rel='stylesheet' href='/bootstrap/dist/css/bootstrap.min.css' /> 
 
@@ -14,6 +16,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="/javascripts/jquery-ui.min.js"></script>
+    <script src="/javascripts/jquery.ui.labeledslider.js"></script>
 
     <!-- 
         You need to include this script tag on any page that has a Google Map.
@@ -41,7 +44,7 @@
             <i class="fa fa-skyatlas fa-3x"></i>
               <div class="vertical-line"/ ><h1>{{title}}</h1> 
             </div>
-          <div><big>pollution data visualization</big></div>
+          <div><big>air pollution visualization</big></div>
           </div>
         </div>
       </header>
@@ -59,19 +62,17 @@
             <div class="col-md-12"><div id="slider"></div></div>
           </div>
           <div id="time-div" class="row">
-            <div class="col-md-8"></div>
-            <div id="the-time" class="col-md-4">
-              Time: 00:00
+            <div id="the-time" class="col-md-12">
+              <big>Pollutant averages from 12AM to 1AM</big>
             </div>
           </div>
           <div id="tab-div" class="row">
             <div class="col-md-12">
               <ul id="data-tabs" class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#">All Data</a></li>
-                <li role="presentation"><a href="#">CO</a></li>
-                <li role="presentation"><a href="#">NO2</a></li>
-                <li role="presentation"><a href="#">Ozone</a></li>
-                <li role="presentation"><a href="#">AQI</a></li>                
+                <li id="CO AQI" role="presentation" class="datatype_select active"><a href="#">AQI</a></li>
+                <li id="CO" role="presentation" class="datatype_select"><a href="#">CO</a></li>
+                <li id="NO2" role="presentation" class="datatype_select"><a href="#">NO2</a></li>
+                <li id="O3" role="presentation" class="datatype_select"><a href="#">Ozone</a></li>               
               </ul>
             </div>
           </div>
@@ -80,41 +81,31 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <th>Data</th>
+                    <th>Measurement</th>
                     <th>Reading</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <th scope="row">Latitude</a><small> (degrees)</small></th>
-                    <td>23.32345</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Longitude <small>(degrees)</small></th>
-                    <td>23.32345</td>
-                  </tr>
-                  <tr>
-                    <th scope="row"><a href="#">Carbon monoxide</a> <small>(ppm)</small></th>
-                    <td>23.32345</td>
-                  </tr>
-                  <tr class="warning">
-                    <th scope="row"><a href="#">Nitrous Oxide</a> <small>(ppb)</small></th>
-                    <td>23.32345</td>
-                  </tr>
-
-                  <tr class="danger">
-                    <th scope="row"><a href="#">Ozone</a> <small>(unknown)</small></th>
-                    <td>23.32345</td>
-                  </tr>
-
-                  <tr class="success">
+                  <tr id="table_AQI">
                     <th scope="row"><a href="#">Air Quality Index</a></th>
-                    <td>23.32345</td>
+                    <td>--</td>
                   </tr>
-
-
+                  <tr id="table_CO">
+                    <th scope="row"><a href="#">Carbon monoxide</a> <small>(ppm)</small></th>
+                    <td>--</td>
+                  </tr>
+                  <tr id="table_NO2">
+                    <th scope="row"><a href="#">Nitrous Oxide</a> <small>(ppb)</small></th>
+                    <td>--</td>
+                  </tr>
+                  <tr id="table_O3">
+                    <th scope="row"><a href="#">Ozone</a> <small>(unknown)</small></th>
+                    <td>--</td>
+                  </tr>
                 </tbody>
               </table>
+              <center><small>(32.845, -117.195)</small></center>
+              <br>
             </div>
           </div>
         </div>
