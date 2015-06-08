@@ -1,5 +1,7 @@
 //slider
 //slider
+
+
   $(function() {
     $( "#slider" ).labeledslider({
       min:0,
@@ -7,9 +9,11 @@
       tickArray: [0,360,720,1080,1380],
       tickLabels: {0:'12AM',360:'6AM',720:'12PM',1080:'6PM',1380:'11PM'},
       step:60,
+      animate: "fast",
       slide: function(e,ui) {
         var begin_time = Math.floor(ui.value/60);
         var minutes = ui.value - (begin_time*60);
+
 
         console.log(begin_time);
         function time_to_str(time){
@@ -131,6 +135,9 @@
         }}
     )
   });
+
+  
+
 
 $('.datatype_select').click(function(event){
   var selected_id = event.target.id;

@@ -6,10 +6,10 @@ google.maps.event.addDomListener(window, 'load', init);
         // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
         var mapOptions = {
             // How zoomed in you want the map to start at (always required)
-            zoom: 10,
+            zoom: 12,
 
             // The latitude and longitude to center the map (always required)
-            center: new google.maps.LatLng(32.7650, -117.1625), // San Diego
+            center: new google.maps.LatLng(32.8474664,-117.1693247), // San Diego
 
 
             // How you would like to style the map. 
