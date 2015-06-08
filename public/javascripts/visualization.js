@@ -77,7 +77,9 @@
                   no2: val['NO2'],
                   o3: val['O3'],
                   aqi: val['CO AQI'],
-                  radius: 100
+                  radius: 100,
+                  lat: val['lat'],
+                  lon: val['lon']
                 };
                 window.coords.push(new google.maps.Circle(circleOptions));
                 var idx = window.coords.length-1;
@@ -91,7 +93,11 @@
 
                   print_arr = [co_to_insert,no2_to_insert,o3_to_insert,aqi_to_insert];
 
-                  console.log(print_arr);
+                  lat_to_insert = window.coords[idx].lat;
+                  lon_to_insert = window.coords[idx].lon;
+
+                  $('#table_coords').html('<small>('+lat_to_insert+','+lon_to_insert+')</small>');
+
 
                   if (co_to_insert==7035.0){co_to_insert='--'}
                   if (no2_to_insert==7035.0){no2_to_insert='--'}
@@ -193,6 +199,8 @@ $('.datatype_select').click(function(event){
             no2: val['NO2'],
             o3: val['O3'],
             aqi: val['CO AQI'],
+            lat: val['lat'],
+            lon: val['lon'],
             radius: 100
           };
           window.coords.push(new google.maps.Circle(circleOptions));
@@ -207,7 +215,11 @@ $('.datatype_select').click(function(event){
 
             print_arr = [co_to_insert,no2_to_insert,o3_to_insert,aqi_to_insert];
 
-            console.log(print_arr);
+            lat_to_insert = window.coords[idx].lat;
+            lon_to_insert = window.coords[idx].lon;
+
+            $('#table_coords').html('<small>('+lat_to_insert+','+lon_to_insert+')</small>');
+
 
             if (co_to_insert==7035.0){co_to_insert='--'}
             if (no2_to_insert==7035.0){no2_to_insert='--'}
