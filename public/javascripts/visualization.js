@@ -271,3 +271,20 @@ $('.datatype_select').click(function(event){
 
 
 });
+
+ $(function() {
+    $( "#dialog-message" ).dialog({
+      modal: true,
+      autoOpen: false,
+      width: 500,
+      buttons: {
+        "Got it!": function() {
+          $( this ).dialog( "close" );
+        }
+      }
+    });
+  });
+
+
+$('#helpclick').click(function(){$( "#dialog-message" ).dialog( "open" );
+});
