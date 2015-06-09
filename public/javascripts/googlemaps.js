@@ -162,7 +162,6 @@ google.maps.event.addDomListener(window, 'load', init);
               };
               window.coords.push(new google.maps.Circle(circleOptions));
               var idx = window.coords.length-1;
-              console.log(idx);
               window.coord_listeners.push(google.maps.event.addListener(window.coords[idx], 'mouseover', function(data) {
                 console.log(idx);
                 co_to_insert = window.coords[idx].co;

@@ -17,7 +17,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="/javascripts/jquery-ui.min.js"></script>
     <script src="/javascripts/jquery.ui.labeledslider.js"></script>
-
     <!-- 
         You need to include this script tag on any page that has a Google Map.
 
@@ -102,6 +101,18 @@
                     <th scope="row"><a href="#">Ozone</a> <small>(unknown)</small></th>
                     <td>--</td>
                   </tr>
+                  <tr>
+                    <th scope="row">Left</th>
+                    <td id="hands_left"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Right</th>
+                    <td id="hands_right"></td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Separation</th>
+                    <td id="hands_sep"></td>
+                  </tr>
                 </tbody>
               </table>
               <center><span id="table_coords"><small>(32.845, -117.195)</small></span></center>
@@ -117,6 +128,11 @@
     </div>
 
     <script src="/javascripts/visualization.js"></script>
+    <script src="/javascripts/leap-0.6.4.js"></script>
+    <script src="/javascripts/leap-plugins-0.1.10.min.js"></script>
+    <script src="/javascripts/leap-plugins-0.1.10-utils.min.js"></script>
+    <script src="/javascripts/gestures.js"></script>
+
     <!--
       <script src='/bootstrap/dist/js/bootstrap.min.js'></script>
     -->
