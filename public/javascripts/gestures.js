@@ -1,3 +1,7 @@
+$(function () {
+  $('[data-toggle="popover"]').popover();
+});
+
 var timeAtCircleStart;
 var INDEX_FINGER = 1;
 var MAX_TIME = 1380;
